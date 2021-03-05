@@ -125,15 +125,33 @@ let rectangle9 = new Block(rectSize, yellow, 3, {
     y: middleRightPositions.top.vertical,
 });
 
-app.stage.addChild(rectangle1.renderBlock());
-app.stage.addChild(rectangle2.renderBlock());
-app.stage.addChild(rectangle3.renderBlock());
-app.stage.addChild(rectangle4.renderBlock());
-app.stage.addChild(rectangle5.renderBlock());
-app.stage.addChild(rectangle6.renderBlock());
-app.stage.addChild(rectangle7.renderBlock());
-app.stage.addChild(rectangle8.renderBlock());
-app.stage.addChild(rectangle9.renderBlock());
+app.stage.addChild(rectangle1.block);
+app.stage.addChild(rectangle1.numberText);
+
+app.stage.addChild(rectangle2.block);
+app.stage.addChild(rectangle2.numberText);
+
+app.stage.addChild(rectangle3.block);
+app.stage.addChild(rectangle3.numberText);
+
+app.stage.addChild(rectangle4.block);
+app.stage.addChild(rectangle4.numberText);
+
+app.stage.addChild(rectangle5.block);
+app.stage.addChild(rectangle5.numberText);
+
+app.stage.addChild(rectangle6.block);
+app.stage.addChild(rectangle6.numberText);
+
+app.stage.addChild(rectangle7.block);
+app.stage.addChild(rectangle7.numberText);
+
+app.stage.addChild(rectangle8.block);
+app.stage.addChild(rectangle8.numberText);
+
+app.stage.addChild(rectangle9.block);
+app.stage.addChild(rectangle9.numberText);
+
 
 // Simple log of Pixi working
 let type = "WebGL"
@@ -151,17 +169,61 @@ function Block(size, colour, number, position) {
     this.number = number;
     this.position = position;
 
-    this.renderBlock = () => {
-        let block = new PIXI.Graphics();
+    this.numberText = new PIXI.Text(this.number, {
+        fontFamily: 'Arial',
+        fontSize: 24,
+        fill: 0x000000,
+        zIndex: 10,
+        align: 'center'
+    });
+    this.numberText.x = this.position.x + 26;
+    this.numberText.y = this.position.y + 20;
 
-        block.lineStyle(2, 0x222222, 1);
-        block.beginFill(this.colour);
-        block.drawRoundedRect(0, 0, this.size, this.size, 6);
-        block.endFill();
-        block.x = this.position.x;
-        block.y = this.position.y;
+    this.block = new PIXI.Graphics();
+    this.block.lineStyle(2, 0x222222, 1);
+    this.block.beginFill(this.colour);
+    this.block.drawRoundedRect(0, 0, this.size, this.size, 6);
+    this.block.endFill();
+    this.block.x = this.position.x;
+    this.block.y = this.position.y;
+    this.block.interactive = true;
+    this.block.dragging = false;
 
-        return block;
+    this.block
+        // events for drag start
+        .on('mousedown', onDragStart)
+        .on('touchstart', onDragStart)
+        // events for drag end
+        .on('mouseup', onDragEnd)
+        .on('mouseupoutside', onDragEnd)
+        .on('touchend', onDragEnd)
+        .on('touchendoutside', onDragEnd)
+        // events for drag move
+        .on('mousemove', onDragMove)
+        .on('touchmove', onDragMove);
+
+
+}
+
+function onDragStart(event) {
+    // store a reference to the data
+    // the reason for this is because of multitouch
+    // we want to track the movement of this particular touch
+    this.data = event.data;
+    this.dragging = true;
+}
+
+function onDragEnd() {
+    this.dragging = false;
+    // set the interaction data to null
+    this.data = null;
+}
+
+function onDragMove(e) {
+    if (this.dragging) {
+        console.log(this)
+        this.position.x = e.data.global.x - 32;
+        this.position.y = e.data.global.y - 32;
     }
 }
 

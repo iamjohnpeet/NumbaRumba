@@ -124,15 +124,33 @@ let rectangle9 = new Block(rectSize, yellow, 3, {
     y: middleRightPositions.top.vertical,
 });
 
-app.stage.addChild(rectangle1.renderBlock());
-app.stage.addChild(rectangle2.renderBlock());
-app.stage.addChild(rectangle3.renderBlock());
-app.stage.addChild(rectangle4.renderBlock());
-app.stage.addChild(rectangle5.renderBlock());
-app.stage.addChild(rectangle6.renderBlock());
-app.stage.addChild(rectangle7.renderBlock());
-app.stage.addChild(rectangle8.renderBlock());
-app.stage.addChild(rectangle9.renderBlock());
+app.stage.addChild(rectangle1.block);
+app.stage.addChild(rectangle1.numberText);
+
+app.stage.addChild(rectangle2.block);
+app.stage.addChild(rectangle2.numberText);
+
+app.stage.addChild(rectangle3.block);
+app.stage.addChild(rectangle3.numberText);
+
+app.stage.addChild(rectangle4.block);
+app.stage.addChild(rectangle4.numberText);
+
+app.stage.addChild(rectangle5.block);
+app.stage.addChild(rectangle5.numberText);
+
+app.stage.addChild(rectangle6.block);
+app.stage.addChild(rectangle6.numberText);
+
+app.stage.addChild(rectangle7.block);
+app.stage.addChild(rectangle7.numberText);
+
+app.stage.addChild(rectangle8.block);
+app.stage.addChild(rectangle8.numberText);
+
+app.stage.addChild(rectangle9.block);
+app.stage.addChild(rectangle9.numberText);
+
 
 // Simple log of Pixi working
 let type = "WebGL"
